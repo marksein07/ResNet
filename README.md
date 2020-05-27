@@ -1,4 +1,3 @@
-# ResNet
 # [Deep Residual Learning for Image Recognition(ResNet)](https://arxiv.org/abs/1512.03385)
 
 
