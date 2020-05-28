@@ -13,10 +13,13 @@ class ResLayer(nn.Module) :
         super(ResLayer, self).__init__()
         self.add_module('Bottle_neck', nn.Sequential(
             nn.Conv2d(num_features, 64, 
+                      kernel_size=1, stride = 1, padding = 0, bias = bias),
+            InPlaceABN(64),
+            nn.Conv2d(64, 64, 
                       kernel_size=3, stride = 1, padding = 1, bias = bias),
             InPlaceABN(64),
             nn.Conv2d(64, num_features, 
-                      kernel_size=3, stride = 1, padding = 1, bias = bias), ) )
+                      kernel_size=1, stride = 1, padding = 0, bias = bias), ) )
         self.add_module('ABN', InPlaceABN(num_features) )
     def forward(self, x) :
         return self.ABN(x+self.Bottle_neck(x))
@@ -33,18 +36,20 @@ class ResBlock(nn.ModuleDict) :
         return x
     
 class ResNet(nn.Module) :
-    def __init__(self, num_layers = (4,4,8,8), num_features = (64,128,256,512), bias = False) :
+    def __init__(self, num_layers = (2,4,6,4), num_features = (64,128,256,512), bias = False) :
         super(ResNet, self).__init__()
         self.features_layers = nn.Sequential(OrderedDict([('conv0', nn.Conv2d(3,num_features[0], 
-                                                                    kernel_size=5, stride=1,
-                                                                    padding = 2, bias = bias ))]))
+                                                                    kernel_size=7, stride=1,
+                                                                    padding = 3, bias = bias )),
+                                                         ('ABN0', InPlaceABN(num_features[0]))]))
         self.features_layers.add_module('ResBlock0', ResBlock(num_layers[0], num_features[0]) )
         pre_num_feature = num_features[0]
         for i, (num_layer, num_feature) in enumerate(zip(num_layers[1:], num_features[1:]),1) :
             self.features_layers.add_module('conv%d'%i, nn.Conv2d(pre_num_feature,num_feature, 
-                                                               kernel_size=3, stride=1,
+                                                               kernel_size=3, stride=2,
                                                                padding = 1, bias = bias) )
-            self.features_layers.add_module('pool%d'%i,     nn.AvgPool2d(2,2) )
+            self.features_layers.add_module('ABN%d'%i, InPlaceABN(num_feature))
+            #self.features_layers.add_module('pool%d'%i,     nn.AvgPool2d(2,2) )
         
             self.features_layers.add_module('ResBlock%d'%i, ResBlock(num_layer, num_feature) )
             pre_num_feature = num_feature
