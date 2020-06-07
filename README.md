@@ -4,7 +4,7 @@
 <p>
 The repositroy training a ResNet model on Cifar10 Dataset, and could be rewrited easily for ImageNet.
     
-Many modern Deep Learning paper in computer vision domain is based on and imporved by ResNet. such as wide-ResNet, ResNext, DenseNet, TResNet, yolov3. The epoch-marking improvement inspires researchers and many existed task-oriented model, image segmentation and image detection could be remade by residual machanism to build a deeper, easy-trained model. Rather than larger model parameters, exquisite but simple machanism with mathematic assumption makes the Deep Learning much better. After importing [Making Convolutional Network Shift-Invariant Again](https://arxiv.org/abs/1904.11486) and [Inplace ABN](https://arxiv.org/abs/1712.02616), ResNet could be trained in single 1080ti GPU with 11 GiB, larger mini-batch size and larger input size scale and deeper model parameters.
+Many modern Deep Learning paper in computer vision domain is based on and imporved by ResNet. Such as Wide-ResNet, ResNext, DenseNet, TResNet, yolov3. The epoch-marking improvement inspires researchers and many existed task-oriented model, image segmentation and image detection could be remade by residual machanism to build a deeper, easy-trained model. Rather than larger model parameters, exquisite but simple machanism with mathematic assumption makes the Deep Learning much better. After importing [Making Convolutional Network Shift-Invariant Again](https://arxiv.org/abs/1904.11486) and [Inplace ABN](https://arxiv.org/abs/1712.02616), ResNet could be trained in single 1080ti GPU with 11 GiB, larger mini-batch size and larger input size scale and deeper model parameters.
 </p>
 
 ## Dependency : 
