@@ -96,7 +96,7 @@ def train(model,
     testing_loss_list = []
     for epoch in range(epoch, max_epoch):  # loop over the dataset multiple times
 
-        if epoch > 1 and (epoch % 150 == 0 or epoch % 225 == 0) :
+        if epoch > 1 and (epoch % int(max_epoch*0.5) == 0 or epoch % int(max_epoch*0.75) == 0) :
             LR/=10;
             optimizer = opt(model.parameters(), lr=LR, momentum=0.9, weight_decay=1e-4)
             print("Optimizer updated.")
